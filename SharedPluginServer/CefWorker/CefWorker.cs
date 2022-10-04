@@ -106,7 +106,7 @@ namespace SharedPluginServer
                 var cefBrowserSettings = new CefBrowserSettings {
                     JavaScript = CefState.Enabled,
                     TabToLinks = CefState.Enabled,
-                    WebSecurity = CefState.Disabled,
+                    //WebSecurity = CefState.Disabled,
                     WebGL = CefState.Enabled,
                     WindowlessFrameRate = 30
                 };
@@ -217,7 +217,7 @@ namespace SharedPluginServer
         }
 #endregion
 
-#region Mouse and keyboard
+#region Mouse, Touch and keyboard
         public void MouseEvent(int x, int y,bool updown,MouseButton button)
         {
             _client.MouseEvent(x,y,updown,button);
@@ -226,6 +226,11 @@ namespace SharedPluginServer
         public void MouseMoveEvent(int x, int y,MouseButton button)
         {
             _client.MouseMoveEvent(x, y,button);
+        }
+
+        public void TouchEvent(int id, float x, float y, float radX, float radY, float rotAngle, float pressure, TouchEventType type, PointerType pointerType)
+        {
+            _client.TouchEvent(id, x, y, radX, radY, rotAngle, pressure, type, pointerType);
         }
 
         public void KeyboardEvent(int character,KeyboardEventType type)

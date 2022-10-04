@@ -22,8 +22,7 @@ namespace SharedPluginServer
             MessageRouter.OnContextReleased(browser, frame, context);
         }
 
-        protected override bool OnProcessMessageReceived(CefBrowser browser, CefProcessId sourceProcess,
-            CefProcessMessage message)
+        protected override bool OnProcessMessageReceived(CefBrowser browser, CefFrame frame, CefProcessId sourceProcess, CefProcessMessage message)
         {
             var handled = MessageRouter.OnProcessMessageReceived(browser, sourceProcess, message);
             if (handled) return true;
@@ -35,12 +34,12 @@ namespace SharedPluginServer
         {
             
         }
-
-       protected override bool OnBeforeNavigation(CefBrowser browser, CefFrame frame, CefRequest request,
-            CefNavigationType navigation_type, bool isRedirect)
-        {
-            return false;
-        }
+       
+        //protected override bool OnBeforeNavigation(CefBrowser browser, CefFrame frame, CefRequest request,
+        //    CefNavigationType navigation_type, bool isRedirect)
+        //{
+        //    return false;
+        //}
     }
 
 

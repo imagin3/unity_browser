@@ -30,10 +30,7 @@ namespace SharedPluginServer
             _mainWorker.BrowserMessageRouter.OnBeforeClose(browser);
         }
 
-        protected override bool OnBeforePopup(CefBrowser browser, CefFrame frame, string targetUrl,
-            string targetFrameName, CefWindowOpenDisposition targetDisposition, bool userGesture,
-            CefPopupFeatures popupFeatures, CefWindowInfo windowInfo, ref CefClient client, CefBrowserSettings settings,
-            ref bool noJavascriptAccess)
+        protected override bool OnBeforePopup(CefBrowser browser, CefFrame frame, string targetUrl, string targetFrameName, CefWindowOpenDisposition targetDisposition, bool userGesture, CefPopupFeatures popupFeatures, CefWindowInfo windowInfo, ref CefClient client, CefBrowserSettings settings, ref CefDictionaryValue extraInfo, ref bool noJavascriptAccess)
         {
             // Block a new popup window.
             // Instead just redirect the popup target to the current browser.

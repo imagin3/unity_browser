@@ -47,8 +47,8 @@ namespace TestClient
 
         private SharedArray<byte> arr; //= new SharedArray<byte>("MainSharedMem");
 
-        private SharedCommServer _inCommServer;
-        private SharedCommServer _outCommServer;
+        private MessageReader _inCommServer;
+        private MessageWriter _outCommServer;
 
         private Bitmap _texture;
 
@@ -102,8 +102,8 @@ namespace TestClient
 #endif
             bool connected = false;
 
-            _inCommServer = new SharedCommServer(false);
-            _outCommServer = new SharedCommServer(true);
+            _inCommServer = MessageReader.Create(inMemFile, 10000);
+            _outCommServer = MessageWriter.Create(outMemFile, 10000);
 
             while (!connected)
             {
@@ -136,12 +136,11 @@ namespace TestClient
                 }
 
 
-                _inCommServer.Connect(inMemFile);
-                bool b1 = _inCommServer.GetIsOpen();
-                _outCommServer.Connect(outMemFile);
-                bool b2 = _outCommServer.GetIsOpen();
+                //_inCommServer.Open(inMemFile);
+                //bool b1 = _inCommServer.Open();
+                //bool b2 = _outCommServer.GetIsOpen();
 
-                connected = b1 && b2;
+                connected = true;//b1 && b2;
                
             }
             arr = new SharedArray<byte>(memfile);

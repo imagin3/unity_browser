@@ -139,9 +139,24 @@ namespace XiliumXWT
             return true;
         }
 
-        protected override bool CanGetCookie(CefCookie cookie) => false;
-        protected override bool CanSetCookie(CefCookie cookie) => false;
+        //protected override bool CanGetCookie(CefCookie cookie) => false;
+        //protected override bool CanSetCookie(CefCookie cookie) => false;
 
         protected override void Cancel(){}
+
+        protected override bool Open(CefRequest request, out bool handleRequest, CefCallback callback)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override bool Skip(long bytesToSkip, out long bytesSkipped, CefResourceSkipCallback callback)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override bool Read(IntPtr dataOut, int bytesToRead, out int bytesRead, CefResourceReadCallback callback)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

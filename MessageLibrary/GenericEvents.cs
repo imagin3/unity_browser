@@ -10,7 +10,8 @@ namespace MessageLibrary
         Mouse=1,
         Keyboard=2,
         Dialog = 3,
-        StopPacket=4
+        StopPacket=4,
+        Touch = 5
     }
 
     [Serializable]

@@ -42,7 +42,8 @@ namespace SharedPluginServer
 
         protected override bool GetRootScreenRect(CefBrowser browser, ref CefRectangle rect)
         {
-            return GetViewRect(browser, ref rect);
+            GetViewRect(browser, out rect);
+            return true;
         }
 
         protected override bool GetScreenPoint(CefBrowser browser, int viewX, int viewY, ref int screenX, ref int screenY)
@@ -51,15 +52,10 @@ namespace SharedPluginServer
             screenY = viewY;
             return true;
         }
-
-        protected override bool GetViewRect(CefBrowser browser, ref CefRectangle rect)
+        protected override void GetViewRect(CefBrowser browser, out CefRectangle rect)
         {
             //see https://www.magpcss.org/ceforum/viewtopic.php?f=6&t=12835
-            rect.X = 0;//_windowX;
-            rect.Y = 0;//_windowY;
-            rect.Width = _windowWidth;
-            rect.Height = _windowHeight;
-            return true;
+            rect = new CefRectangle(0,0, _windowWidth, _windowHeight);
         }
 
         protected override bool GetScreenInfo(CefBrowser browser, CefScreenInfo screenInfo)
@@ -84,17 +80,14 @@ namespace SharedPluginServer
                 _memServer.PushTexture(buffer, _copysize);
             
         }
-
-        //TODO: use this?
-    protected override void OnCursorChange(CefBrowser browser, IntPtr cursorHandle, CefCursorType type, CefCursorInfo customCursorInfo)
-        {
-            
-        }
         
         protected override void OnScrollOffsetChanged(CefBrowser browser, double x, double y)
         {
         }
 
-        
+        protected override void OnAcceleratedPaint(CefBrowser browser, CefPaintElementType type, CefRectangle[] dirtyRects, IntPtr sharedHandle)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

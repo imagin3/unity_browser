@@ -35,6 +35,7 @@ namespace SharedPluginServer
 
         [STAThread]
         static int Main(string[] args) {
+
             var version=Environment.Version;
             Log.InfoFormat("start at current directory {0}",Directory.GetCurrentDirectory() );
             Log.Info("parsing command args");
@@ -135,7 +136,7 @@ namespace SharedPluginServer
                 }
                 var cefSettings = new CefSettings
                 {
-                    SingleProcess = false,
+                    //SingleProcess = false,
                     MultiThreadedMessageLoop = true,
                     WindowlessRenderingEnabled = true,
                     //

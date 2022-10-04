@@ -76,10 +76,9 @@ namespace SharedPluginServer
             return _renderHandler;
         }
 
-        protected override bool OnProcessMessageReceived(CefBrowser browser, CefProcessId sourceProcess,
-            CefProcessMessage message)
+        protected override bool OnProcessMessageReceived(CefBrowser browser, CefFrame frame, CefProcessId sourceProcess, CefProcessMessage message)
         {
-            var handled = _mainWorker.BrowserMessageRouter.OnProcessMessageReceived(browser, sourceProcess, message);
+            var handled = _mainWorker.BrowserMessageRouter.OnProcessMessageReceived(browser, frame, sourceProcess, message);
             if (handled) return true;
 
             return false;
@@ -161,6 +160,48 @@ namespace SharedPluginServer
             _lifespanHandler.MainBrowser.GetHost().SendMouseMoveEvent(mouseEvent,false);
         }
 
+        public void TouchEvent(int id,  float x, float y, float radX, float radY, float rotAngle, float pressure, TouchEventType type, PointerType pointerType)
+        {
+            CefTouchEvent touchEvent = new CefTouchEvent()
+            {
+                Id = id,
+                X = x,
+                Y = y,
+
+                RadiusX = radX,
+                RadiusY = radY,
+                RotationAngle = rotAngle,
+
+                Pressure = pressure,
+            };
+
+            //CefEventFlags modifiers = new CefEventFlags();
+
+            CefPointerType cefpointerType = CefPointerType.Unknown;
+            if (pointerType == PointerType.Eraser)
+                cefpointerType = CefPointerType.Eraser;
+            else if (pointerType == PointerType.Mouse)
+                cefpointerType = CefPointerType.Mouse;
+            else if (pointerType == PointerType.Pen)
+                cefpointerType = CefPointerType.Pen;
+            else if (pointerType == PointerType.Touch)
+                cefpointerType = CefPointerType.Touch;
+            touchEvent.PointerType = cefpointerType;
+
+            CefTouchEventType cefType = new CefTouchEventType();
+            if (type == TouchEventType.Cancelled)
+                cefType = CefTouchEventType.Cancelled;
+            if (type == TouchEventType.Moved)
+                cefType = CefTouchEventType.Moved;
+            if (type == TouchEventType.Pressed)
+                cefType = CefTouchEventType.Pressed;
+            if (type == TouchEventType.Released)
+                cefType = CefTouchEventType.Released;
+            touchEvent.Type = cefType;
+
+            _lifespanHandler.MainBrowser.GetHost().SendTouchEvent(touchEvent);
+        }
+
         public void KeyboardEvent(int character,KeyboardEventType type)
         {
             CefKeyEvent keyEvent = new CefKeyEvent()
@@ -178,11 +219,10 @@ namespace SharedPluginServer
 
         public void FocusEvent(int focus)
         {
-
             if (focus == 0)
-                _lifespanHandler.MainBrowser.GetHost().SendFocusEvent(false);
+                _lifespanHandler.MainBrowser.GetHost().SetFocus(false);
             else
-            _lifespanHandler.MainBrowser.GetHost().SendFocusEvent(true);
+            _lifespanHandler.MainBrowser.GetHost().SetFocus(true);
         }
 
         public void MouseLeaveEvent()

@@ -292,6 +292,11 @@ namespace SharedPluginServer {
 
                     break;
                 }
+                case BrowserEventType.Touch:
+                    TouchMessage touchMessage = msg.Event as TouchMessage;
+                    if (touchMessage != null)
+                        _mainWorker.TouchEvent(touchMessage.Id, touchMessage.X, touchMessage.Y, touchMessage.RadiusX, touchMessage.RadiusY, touchMessage.RotationAngle, touchMessage.Pressure, touchMessage.Type, touchMessage.PointerType);
+                    break;
             }
 
            
